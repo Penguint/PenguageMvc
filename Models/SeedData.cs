@@ -123,7 +123,7 @@ public static class SeedData
         var roles = new[] { "Admin", "User" };
         foreach (var role in roles)
         {
-            var roleExist = roleManager.RoleExistsAsync(role).GetAwaiter().GetResult();
+            var roleExist = await roleManager.RoleExistsAsync(role);
             if (!roleExist)
             {
                 await roleManager.CreateAsync(new IdentityRole(role));
@@ -133,13 +133,13 @@ public static class SeedData
 
     public static async Task InitializeUserAsync(IServiceProvider serviceProvider)
     {
-        var userManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
-        var defaultUser = new IdentityUser
+        var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+        var defaultUser = new ApplicationUser
         {
             UserName = "Admin"
         };
         // if don't have this user, create the default user
-        var defaultUserExist = userManager.FindByNameAsync(defaultUser.UserName).GetAwaiter().GetResult();
+        var defaultUserExist = await userManager.FindByNameAsync(defaultUser.UserName);
         if (defaultUserExist == null)
         {
             await userManager.CreateAsync(defaultUser, "Admin@123");

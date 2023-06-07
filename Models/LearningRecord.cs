@@ -7,7 +7,7 @@ namespace PenguageMvc.Models
     {
         public int Id { get; set; }
 
-        public IdentityUser? User { get; set; }
+        public ApplicationUser? User { get; set; }
 
         public Question? Question { get; set; }
         
