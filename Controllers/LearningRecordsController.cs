@@ -22,9 +22,9 @@ namespace PenguageMvc.Controllers
         // GET: LearningRecords
         public async Task<IActionResult> Index()
         {
-            return _context.LearningRecord != null ?
-                        View(await _context.LearningRecord.ToListAsync()) :
-                        Problem("Entity set 'ApplicationDbContext.LearningRecord'  is null.");
+              return _context.LearningRecord != null ? 
+                          View(await _context.LearningRecord.ToListAsync()) :
+                          Problem("Entity set 'ApplicationDbContext.LearningRecord'  is null.");
         }
 
         // GET: LearningRecords/Details/5
@@ -56,7 +56,7 @@ namespace PenguageMvc.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,CompleteDate")] LearningRecord learningRecord)
+        public async Task<IActionResult> Create([Bind("Id,CompleteDate,Correct")] LearningRecord learningRecord)
         {
             if (ModelState.IsValid)
             {
@@ -88,7 +88,7 @@ namespace PenguageMvc.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,CompleteDate")] LearningRecord learningRecord)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,CompleteDate,Correct")] LearningRecord learningRecord)
         {
             if (id != learningRecord.Id)
             {
@@ -150,14 +150,14 @@ namespace PenguageMvc.Controllers
             {
                 _context.LearningRecord.Remove(learningRecord);
             }
-
+            
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool LearningRecordExists(int id)
         {
-            return (_context.LearningRecord?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.LearningRecord?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

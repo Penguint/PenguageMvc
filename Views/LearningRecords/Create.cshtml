@@ -17,6 +17,11 @@
                 <input asp-for="CompleteDate" class="form-control" />
                 <span asp-validation-for="CompleteDate" class="text-danger"></span>
             </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Correct" /> @Html.DisplayNameFor(model => model.Correct)
+                </label>
+            </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
