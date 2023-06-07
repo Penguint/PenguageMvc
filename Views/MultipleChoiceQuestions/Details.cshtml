@@ -1,0 +1,60 @@
+﻿@model PenguageMvc.Models.MultipleChoiceQuestion
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>MultipleChoiceQuestion</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Stem)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Stem)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CorrectAnswer)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CorrectAnswer)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Distractor1)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Distractor1)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Distractor2)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Distractor2)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Distractor3)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Distractor3)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Language)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Language)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Explanation)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Explanation)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

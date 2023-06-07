@@ -1,0 +1,51 @@
+﻿@model MultipleChoiceViewModel
+
+@{
+    ViewData["Title"] = "Learn";
+}
+
+<form asp-action="MultipleChoice" method="post">
+    <div class="form-group">
+		@Html.HiddenFor(m => m.Id)
+    </div>
+    
+	<div>@Model.Stem</div>
+
+    <fieldset disabled="@Model.Verified">
+    <div class="form-group">
+        @for (int i = 0; i < Model.UserOptions!.Count; i++)
+        {
+			<div>
+				<input type="hidden" asp-for="@Model.UserOptions[i]" value="@Model.UserOptions[i]" hidden>
+				<input type="radio" asp-for="@Model.UserAnswer" value="@i" id="UserOptions_@(i)_radio"> @Model.UserOptions![i]
+			</div>
+        }
+    </div>
+    </fieldset>
+
+	@if (Model.Verified)
+	{
+        @if (Model.UserAnswer == Model.Truth)
+        {
+            <div>Correct :)</div>
+        }
+        else
+        {
+            <div>Wrong :(</div>
+        }
+        <p>
+            Explanation: @Model.Explaination
+		</p>
+	}
+
+    <div class="form-group">
+        @if (!Model.Verified)
+        {
+            <input type="submit" class="btn btn-primary" value="Submit" />
+        } 
+        else
+        {
+            <a asp-controller="Learn" class="btn btn-primary">Next</a>
+        }
+    </div>
+</form>
