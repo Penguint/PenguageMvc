@@ -17,6 +17,7 @@ namespace PenguageMvc.Controllers
             _userManager = userManager;
         }
 
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             var user = await _userManager.GetUserAsync(User);  // Get the current user

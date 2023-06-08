@@ -17,6 +17,7 @@ namespace PenguageMvc.Controllers
             _userManager = userManager;
         }
 
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             var user = await _userManager.GetUserAsync(User);  // Get the current user
@@ -34,7 +35,7 @@ namespace PenguageMvc.Controllers
             }
             if (user.LanguageToLearn == "Chinese")
             {
-                return Redirect("https://www.notion.so/Learning-Materials-for-Chinese-4bf8524d8557498eb36d710cd0f35662?pvs=4");
+                return Redirect("https://diagnostic-increase-8d0.notion.site/Chinese-Vocabulary-4bf8524d8557498eb36d710cd0f35662");
             }
             return NotFound();
         }
