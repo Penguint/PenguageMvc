@@ -1,4 +1,5 @@
 ﻿using Humanizer.Localisation.TimeToClockNotation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -46,6 +47,7 @@ public class LearnController : Controller
         };
     }
 
+    [Authorize]
     public IActionResult Index()
     {
         var learnViewModel = new IndexViewModel
@@ -57,16 +59,19 @@ public class LearnController : Controller
         return View(learnViewModel);
 	}
 
+    [Authorize]
     public IActionResult Index(IndexViewModel learnViewModel)
     {
         return View(learnViewModel);
     }
 
+    [Authorize]
     public IActionResult MultipleChoice()
 	{
 		return View(_RandomMultipleChoiceViewModel());
 	}
 
+    [Authorize]
     [HttpPost]
     public async Task<IActionResult> MultipleChoice([Bind("Id,UserOptions,UserAnswer")]MultipleChoiceViewModel multipleChoiceViewModel)
     {
@@ -118,7 +123,7 @@ public class LearnController : Controller
                 User = user,
                 Question = multipleChoiceQuestion,
                 CompleteDate = DateTime.Now,
-                Correct = multipleChoiceViewModel.UserAnswer == multipleChoiceViewModel.Truth
+                Correct = multipleChoiceViewModel.UserAnswer == truth
             };
             _context.Add(learningRecord);
             await _context.SaveChangesAsync();

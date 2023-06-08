@@ -131,19 +131,40 @@ public static class SeedData
         }
     }
 
+    public static async Task AddUserAsync(UserManager<ApplicationUser> userManager, ApplicationUser user, string password, string role)
+    {
+        // if don't have this user, create the default user
+        var userExist = await userManager.FindByNameAsync(user.UserName!);
+        if (userExist == null)
+        {
+            await userManager.CreateAsync(user, password);
+            await userManager.AddToRoleAsync(user, role);
+        }
+    }
+
     public static async Task InitializeUserAsync(IServiceProvider serviceProvider)
     {
         var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-        var defaultUser = new ApplicationUser
-        {
-            UserName = "Admin"
-        };
-        // if don't have this user, create the default user
-        var defaultUserExist = await userManager.FindByNameAsync(defaultUser.UserName);
-        if (defaultUserExist == null)
-        {
-            await userManager.CreateAsync(defaultUser, "Admin@123");
-            await userManager.AddToRoleAsync(defaultUser, "Admin");
-        }
+        await AddUserAsync(userManager, new ApplicationUser
+			{
+				UserName = "Admin",
+				LanguageToLearn = "Spanish"
+			}, "Admin@123", "Admin");
+        await AddUserAsync(userManager, new ApplicationUser
+			{
+				UserName = "SpanishUser",
+				LanguageToLearn = "Spanish"
+			}, "User@123", "User");
+        await AddUserAsync(userManager, new ApplicationUser
+			{
+				UserName = "JapaneseUser",
+				LanguageToLearn = "Japanese"
+			}, "User@123", "User");
+        await AddUserAsync(userManager, new ApplicationUser
+			{
+				UserName = "ChineseUser",
+				LanguageToLearn = "Chinese"
+			}, "User@123", "User");
     }
+
 }
