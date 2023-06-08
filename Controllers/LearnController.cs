@@ -21,11 +21,14 @@ public class LearnController : Controller
         _userManager = userManager;
 	}
 
-	private MultipleChoiceViewModel _RandomMultipleChoiceViewModel()
+	private async Task<MultipleChoiceViewModel> _RandomMultipleChoiceViewModel()
 	{
+        var user = await _userManager.GetUserAsync(User);
+        var language = user!.LanguageToLearn;
+
         var random = new Random();
         var multipleChoiceQuestion = _context.MultipleChoiceQuestion
-            .Where(q => q.Language == "Spanish").ToList().OrderBy(q => random.Next())
+            .Where(q => q.Language == language).ToList().OrderBy(q => random.Next())
             .FirstOrDefault();
 
         var stem = multipleChoiceQuestion!.Stem;
@@ -48,12 +51,12 @@ public class LearnController : Controller
     }
 
     [Authorize]
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
         var learnViewModel = new IndexViewModel
         {
             QuestionView = "MultipleChoice",
-            QuestionViewModel = _RandomMultipleChoiceViewModel()
+            QuestionViewModel = await _RandomMultipleChoiceViewModel()
         };
 
         return View(learnViewModel);
@@ -66,9 +69,9 @@ public class LearnController : Controller
     }
 
     [Authorize]
-    public IActionResult MultipleChoice()
+    public async Task<IActionResult> MultipleChoice()
 	{
-		return View(_RandomMultipleChoiceViewModel());
+		return View(await _RandomMultipleChoiceViewModel());
 	}
 
     [Authorize]
